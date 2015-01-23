@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "description": "Node for node-red to unixODBC and its supported drivers.",
   "main": "odbc.js",
+  "dependencies": {
+    "odbc": ">=0.6.11"
+  },
+  "node-red": {
+    "nodes": {
+      "odbc": "odbc.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +21,10 @@
   "keywords": [
     "node-red",
     "odbc",
-    "unixodbc"
+    "unixodbc",
+    "mssql",
+    "mysql",
+    "sql"
   ],
   "author": "efa2000",
   "license": "ISC",
