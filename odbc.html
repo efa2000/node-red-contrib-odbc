@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('Connection',{
+    RED.nodes.registerType('ODBC-CN',{
         category: 'config',
         defaults: {
             driver: {value:""},
@@ -11,12 +11,12 @@
             password: {type:"password"}
         },
         label: function() {
-            return this.server;
+            return this.driver + this.server || "ODBC";
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="Connection">
+<script type="text/x-red" data-template-name="ODBC-CN">
      <div class="form-row">
         <label for="node-config-input-driver"><i class="icon-bookmark"></i> Driver</label>
         <input type="text" id="node-config-input-driver" placeholder="e.q. {MSSQL}">
@@ -45,7 +45,7 @@
         category: 'storage',
         color: '#C0DEED',
         defaults: {
-            cn: {type:"Connection"},
+            odbcCN: {type:"ODBC-CN"},
             name: {value:""},
             query: {value: ""},
             outField: {value:"payload"}
@@ -101,8 +101,8 @@
 
 <script type="text/x-red" data-template-name="ODBC">
     <div class="form-row">
-        <label for="node-input-cn"><i class="icon-tag"></i> Connection</label>
-        <input type="text" id="node-input-cn">
+        <label for="node-input-odbcCN"><i class="icon-tag"></i> Connection</label>
+        <input type="text" id="node-input-odbcCN">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
