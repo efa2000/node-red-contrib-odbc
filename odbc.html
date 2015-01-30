@@ -1,0 +1,130 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Connection',{
+        category: 'config',
+        defaults: {
+            driver: {value:""},
+            server: {value:""},
+            other: {value:""}
+        },
+        credentials: {
+            username: {type:"text"},
+            password: {type:"password"}
+        },
+        label: function() {
+            return this.server;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="Connection">
+     <div class="form-row">
+        <label for="node-config-input-driver"><i class="icon-bookmark"></i> Driver</label>
+        <input type="text" id="node-config-input-driver" placeholder="e.q. {MSSQL}">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-server"><i class="icon-bookmark"></i> Server</label>
+        <input type="text" id="node-config-input-server" placeholder="Server name or IP">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-username"><i class="icon-tag"></i> Username</label>
+        <input type="text" id="node-config-input-username">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-password"><i class="icon-tag"></i> Password</label>
+        <input type="password" id="node-config-input-password">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-server"><i class="icon-bookmark"></i> Other</label>
+        <input type="text" id="node-config-input-other" placeholder="e.q. DATABASE=dbname;TDS_Version=7">
+        <div class="form-tips">Tip: Set other connetion string parametrs like DATABASE</div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('ODBC',{
+        category: 'storage',
+        color: '#C0DEED',
+        defaults: {
+            cn: {type:"Connection"},
+            name: {value:""},
+            query: {value: ""},
+            outField: {value:"payload"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "db.png",
+        label: function() {
+            return this.name||"ODBC";
+        },
+        oneditprepare: function() {
+            function functionDialogResize() {
+                var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+                var height = $("#dialog-form").height();
+                for (var i=0;i<rows.size();i++) {
+                    height -= $(rows[i]).outerHeight(true);
+                }
+                var editorRow = $("#dialog-form>div.node-text-editor-row");
+                height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+                $(".node-text-editor").css("height",height+"px");
+            };
+            $( "#dialog" ).on("dialogresize", functionDialogResize);
+            $( "#dialog" ).one("dialogopen", function(ev) {
+                var size = $( "#dialog" ).dialog('option','sizeCache-function');
+                if (size) {
+                    $("#dialog").dialog('option','width',size.width);
+                    $("#dialog").dialog('option','height',size.height);
+                    functionDialogResize();
+                }
+            });
+            $( "#dialog" ).one("dialogclose", function(ev,ui) {
+                var height = $( "#dialog" ).dialog('option','height');
+                $( "#dialog" ).off("dialogresize",functionDialogResize);
+            });
+            var that = this;
+            require(["orion/editor/edit"], function(edit) {
+                that.editor = edit({
+                    parent:document.getElementById('node-input-query-editor'),
+                    lang:"text",
+                    showLinesRuler:false,
+                    showFoldingRuler:false,
+                    contents: $("#node-input-query").val()
+                });
+                $("#node-input-name").focus();
+            });
+        },
+        oneditsave: function() {
+            $("#node-input-query").val(this.editor.getText());
+            delete this.editor;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ODBC">
+    <div class="form-row">
+        <label for="node-input-cn"><i class="icon-tag"></i> Connection</label>
+        <input type="text" id="node-input-cn">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row" style="margin-bottom: 0px;">
+        <label for="node-input-query" style="width: 100% !important;"><i class="fa fa-comments"></i> More</label>
+        <input type="hidden" id="node-input-query" autofocus="autofocus">
+    </div>
+    <div class="form-row node-text-editor-row">
+        <div style="height: 250px;" class="node-text-editor" id="node-input-query-editor" ></div>
+    </div>
+    <div class="form-tips">Tip: You can uses the <i><a href="http://mustache.github.io/mustache.5.html" target="_new">mustache</a></i> format.</div>
+    <div class="form-row">
+        <label for="node-input-outField"><i class="fa fa-edit"></i> Result to</label>
+        msg.<input type="text" id="node-input-outField" placeholder="payload" style="width: 64%;">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ODBC">
+    <p>Node-Red node for discover by Simple Service Discovery Protocol (SSDP)</p>
+    <h4>Search Target</h4>
+    <p>Searches for a Host that has a service profile corresponding to serviceName or all services <i>ssdp:all</i></br>
+    Example: <i>urn:schemas-upnp-org:service:ContentDirectory:1</i></p>
+</script>
