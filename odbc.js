@@ -32,11 +32,35 @@ module.exports = function(RED) {
 	    var odbcCN = RED.nodes.getNode(config.odbcCN);
 	    this.query = config.query;
 	    this.db = odbcCN.db;
+	    this.outField = config.outField;
 	    var node = this;
+	    var b = node.outField.split(".");
+        var i = 0;
+        var m = null;
+        var rec = function(obj, data) {
+            i += 1;
+            if ((i < b.length) && (typeof obj[b[i-1]] === "object")) {
+                rec(obj[b[i-1]], data); // not there yet - carry on digging
+            }
+            else {
+                 if (i === b.length) { // we've finished so assign the value
+                     obj[b[i-1]] = data;
+                     node.send(m);
+                 }
+                 else {
+                     obj[b[i-1]] = {}; // needs to be a new object so create it
+                     rec(obj[b[i-1]], data); // and carry on digging
+                 }
+            }
+        }
 	    this.on('input', function(msg){
 	    	var query = mustache.render(node.query,msg);
 	    	try {
-				var rows = node.db.querySync(query);
+				var result = node.db.querySync(query);
+				console.log(result);
+				m = msg;
+				i = 0;
+				rec(msg, result);
             } catch(err) {
                 node.error(err.message);
             }
