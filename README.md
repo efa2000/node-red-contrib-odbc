@@ -16,16 +16,12 @@ Expample of odbcinst.ini
 	Description=ODBC for PostgreSQL
 	Driver=/usr/lib/psqlodbc.so
 	Setup=/usr/lib/libodbcpsqlS.so
-	Driver64=/usr/lib64/psqlodbc.so
-	Setup64=/usr/lib64/libodbcpsqlS.so
 	FileUsage=1
 
 	[MySQL]
 	Description=ODBC for MySQL
 	Driver=/usr/lib/libmyodbc5.so
 	Setup=/usr/lib/libodbcmyS.so
-	Driver64=/usr/lib64/libmyodbc5.so
-	Setup64=/usr/lib64/libodbcmyS.so
 	FileUsage=1
 
 	[FreeTDS]
@@ -46,3 +42,6 @@ After insuring that all requirements are installed run the following command in 
 ```bash
 npm install node-red-contrib-odbc
 ```
+
+Configure node
+-------
