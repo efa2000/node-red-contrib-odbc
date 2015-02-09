@@ -11,7 +11,7 @@ Requirements
 * odbc drivers for target database
 * properly configured odbc.ini and odbcinst.ini.
 Expample of odbcinst.ini
-```bash
+```
 	[PostgreSQL]
 	Description=ODBC for PostgreSQL
 	Driver=/usr/lib/psqlodbc.so
