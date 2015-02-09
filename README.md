@@ -46,10 +46,13 @@ npm install node-red-contrib-odbc
 Configure node
 -------
 Connection string
+
 [![Config](https://raw.githubusercontent.com/efa2000/node-red-contrib-odbc/master/Config_CN.png)](https://raw.githubusercontent.com/efa2000/node-red-contrib-odbc/master/Config_CN.png)
 
 Query
+
 [![Config](https://raw.githubusercontent.com/efa2000/node-red-contrib-odbc/master/query.png)](https://raw.githubusercontent.com/efa2000/node-red-contrib-odbc/master/query.png)
+
 You can uses the mustache format.
 Example:
 ```sql
