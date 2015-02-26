@@ -25,7 +25,8 @@
     "unixodbc",
     "mssql",
     "mysql",
-    "sql"
+    "sql",
+    "PostgreSQL"
   ],
   "author": "efa2000",
   "license": "ISC",
