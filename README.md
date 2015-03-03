@@ -10,56 +10,48 @@ Requirements
   * on OSX using macports.org `sudo port unixODBC`
 * odbc drivers for target database
 * properly configured odbc.ini and odbcinst.ini.
+
 Expample of odbcinst.ini
-```
-	[PostgreSQL]
-	Description=ODBC for PostgreSQL
-	Driver=/usr/lib/psqlodbc.so
-	Setup=/usr/lib/libodbcpsqlS.so
-	FileUsage=1
 
-	[MySQL]
-	Description=ODBC for MySQL
-	Driver=/usr/lib/libmyodbc5.so
-	Setup=/usr/lib/libodbcmyS.so
-	FileUsage=1
+		[PostgreSQL]
+		Description=ODBC for PostgreSQL
+		Driver=/usr/lib/psqlodbc.so
+		Setup=/usr/lib/libodbcpsqlS.so
+		FileUsage=1
 
-	[FreeTDS]
-	Description=ODBC for MS SQL
-	Driver=/usr/lib64/libtdsodbc.so.0
+		[MySQL]
+		Description=ODBC for MySQL
+		Driver=/usr/lib/libmyodbc5.so
+		Setup=/usr/lib/libodbcmyS.so
+		FileUsage=1
 
-	[MSSQL]
-	Description=Microsoft ODBC Driver 11 for SQL Server
-	Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-11.0.so.2270.0
-	Threading=1
-	UsageCount=1
-```
+		[FreeTDS]
+		Description=ODBC for MS SQL
+		Driver=/usr/lib64/libtdsodbc.so.0
+
+		[MSSQL]
+		Description=Microsoft ODBC Driver 11 for SQL Server
+		Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-11.0.so.2270.0
+		Threading=1
+		UsageCount=1
+
 Install
 -------
 
 After insuring that all requirements are installed run the following command in the root directory of your Node-RED install
 
-```bash
-npm install node-red-contrib-odbc
-```
+
+		npm install node-red-contrib-odbc
 
 Configure node
 -------
-Connection string
+
+####Connection string
 
 [![Config](https://raw.githubusercontent.com/efa2000/node-red-contrib-odbc/master/Config_CN.png)](https://raw.githubusercontent.com/efa2000/node-red-contrib-odbc/master/Config_CN.png)
 
-Query
+####Query
 
 [![Config](https://raw.githubusercontent.com/efa2000/node-red-contrib-odbc/master/query.png)](https://raw.githubusercontent.com/efa2000/node-red-contrib-odbc/master/query.png)
 
 You can uses the mustache format.
-Example:
-```sql
-	SELECT * FROM TestDB WHERE Name = {{{payload.name}}}
-```
-or you can take the request of the message field
-Example:
-```
-	{{{payload.query}}}
-```

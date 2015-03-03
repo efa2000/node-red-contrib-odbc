@@ -5,7 +5,20 @@ module.exports = function(RED) {
 
 	function connection(config) {
 	    RED.nodes.createNode(this, config);
-	    this.cn = "DRIVER="+config.driver + ";"+"SERVER="+config.server + ";"+"USER="+ this.credentials.username + ";"+"PASSWORD="+ this.credentials.password + ";"+ config.other;
+	    this.cn = "";
+	    if (config.driver!=""){
+	    	this.cn = this.cn + "DRIVER="+config.driver + ";"
+	    }
+	    if (config.server!=""){
+	    	this.cn = this.cn + "SERVER="+config.server + ";"
+	    }
+	    if (this.credentials.username!=""){
+	    	this.cn = this.cn + "USER="+ this.credentials.username + ";"
+	    }
+   	    if (this.credentials.password != ""){
+	    	this.cn = this.cn + "PASSWORD="+ this.credentials.password + ";"
+	    }
+	    this.cn = this.cn + config.other;
 	    this.pool = new Pool();
 	    var node = this;
 /*	   	node.on('close',function(){
