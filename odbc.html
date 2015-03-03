@@ -2,6 +2,7 @@
     RED.nodes.registerType('ODBC-CN',{
         category: 'config',
         defaults: {
+            name: {value:""},
             driver: {value:""},
             server: {value:""},
             other: {value:""}
@@ -11,13 +12,17 @@
             password: {type:"password"}
         },
         label: function() {
-            return this.driver + this.server || "ODBC-CN";
+            return this.name || "ODBC-CN";
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ODBC-CN">
-     <div class="form-row">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Connection Name">
+    </div>
+    <div class="form-row">
         <label for="node-config-input-driver"><i class="fa fa-tasks"></i> Driver</label>
         <input type="text" id="node-config-input-driver" placeholder="e.q. {MSSQL}">
     </div>
