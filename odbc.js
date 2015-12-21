@@ -61,27 +61,37 @@ module.exports = function(RED) {
                  }
             }
         }
-		node.on('input',function(msg){
+/*		node.on('input',function(msg){
 			node.pool.open(node.cn, function(err, db){
 		    	if (err){
 		    		node.error(err);
 		    		node.status({fill:"red",shape:"ring",text:"Error"});
 		    		return;
-		    	}
+		    	}*/
+
+		node.pool.open(node.cn, function(err, db){
+        	if (err) {
+	    		node.error(err);
+	    		node.status({fill:"red",shape:"ring",text:"Error"});
+	    		db.close(function(){});
+	    		return;
+	    	}
+			node.on('input', function(msg) {
 		    	node.status({fill:"blue",shape:"dot",text:"requesting"});
 		    	var query = mustache.render(node.query,msg);
 		    	db.query(query, function (err, rows, moreResultSets){
 	        		if (err) {
 	        			node.error(err);
 	        			node.status({fill:"red",shape:"ring",text:"Error"});
+	        			db.close(function(){});
 	        			return;
 	        		}
 	        		i = 0;
 	        		r = rows;
 	        		m = msg;
 	        		rec(msg);
-	        	})
-		    })
+	        	});
+		    });
 		});
 	}
   	RED.nodes.registerType("ODBC", odbc);
