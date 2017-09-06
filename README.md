@@ -2,6 +2,8 @@
 Node for Node-RED to unixODBC and its supported drivers.
 Based on node-odbc https://github.com/wankdanker/node-odbc 
 
+## NOT SUPPORTED!
+
 Requirements
 ------------
 
