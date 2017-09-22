@@ -13,7 +13,7 @@ Requirements
 * odbc drivers for target database
 * properly configured odbc.ini and odbcinst.ini.
 
-Expample of odbcinst.ini
+Example of odbcinst.ini
 
 		[PostgreSQL]
 		Description=ODBC for PostgreSQL
